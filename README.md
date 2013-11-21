@@ -29,7 +29,8 @@ _[git submodule]_
 * Go inside the folder you have got
 * Launch the command: 
 ```
-git submodule add -f https://github.com/AlessandroMinoccheri/UserPermissions.git app/Plugin/UserPermissions/.
+git submodule add -f https://github.com/AlessandroMinoccheri/UserPermissions.git 
+app/Plugin/UserPermissions/.
 ```
 
 
