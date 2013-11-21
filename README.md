@@ -25,7 +25,7 @@ To install the plugin inside your cakephp project you can do this:
 
 _[git submodule]_
 
-* Open you console 
+* Open your console 
 * Go inside the folder you have got
 * Launch the command: 
 ```
