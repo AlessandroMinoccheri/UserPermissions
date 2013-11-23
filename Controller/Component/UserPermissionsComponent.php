@@ -9,7 +9,6 @@ class UserPermissionsComponent extends Component {
         $this->controller =& $controller; 
     } 
 
-
     public function allow($rules) {
     	App::uses('CakeSession', 'Model/Datasource');
 		$user_id = CakeSession::read('Auth.User.id');
@@ -21,6 +20,8 @@ class UserPermissionsComponent extends Component {
 		$controller = '';
 		$message = '';
 
+		$find = 0;
+
 		foreach($rules as $key => $value){
 			if($key == 'user_type'){
 				$user_type = $value;
@@ -29,7 +30,7 @@ class UserPermissionsComponent extends Component {
 				$redirect = $value;
 			}
 			if($key == 'action'){
-				$params = $value;
+				$action = $value;
 			}
 			if($key == 'controller'){
 				$controller = $value;
@@ -39,48 +40,45 @@ class UserPermissionsComponent extends Component {
 			}
 		}
 
-		foreach($rules as $key => $value){
-			if(($key != 'user_type') && ($key != 'redirect') && ($key == $user_type)){
+		foreach($rules['groups']  as $key => $value){
+			if($key == $user_type){
 				foreach($value as $v){
 					array_push($actions, $v);
 				}
 			}
 		}
 
-		foreach($rules as $key => $value){
-			if(($key != 'user_type') && ($key != 'redirect') && ($key == $user_type)){
-				foreach($value as $v){
-					if($user_type == 'guest'){
-						if(!isset($user_id)){
-							if(!in_array($params, $actions)){
-								if(!in_array('*', $actions)){
-									if($redirect != ''){
-										if($message != '')
-											$this->controller->Session->setFlash($message);
-										
-										$this->controller->redirect($redirect);
-									}
-									else{
-										$bool = '0';
-									}
-								}
-							}
+		if(!isset($user_id))
+			$user_type = 'guest';
+
+		foreach($rules['groups'] as $key => $value){
+			if($key == $user_type){
+				if(!in_array('*', $actions)){
+					if(!in_array($action, $actions)){
+						$find = 1;
+						if($redirect != ''){
+							if($message != '')
+								$this->controller->Session->setFlash($message);
+							
+							$this->controller->redirect($redirect);
+						}
+						else{
+							$bool = '0';
 						}
 					}
-					else{
-						if((!isset($user_id)) || (!in_array($params, $actions))){
-							if(!in_array( '*', $actions)){
-								if($redirect != ''){
-									if($message != '')
-										$this->controller->Session->setFlash($message);
+				}
+			}
+		}
 
-									$this->controller->redirect($redirect);
-								}
-								else{
-									$bool = '0';
-								}
-							}
-						}
+		if($find == 0){
+			foreach($rules['views'] as $key => $value){
+				if($key == $action){
+					echo('<p>value: '.$value.'</p>');
+					if(!$this->controller->$value()){
+						echo'diverso';
+					}
+					else{
+						echo'uguali';
 					}
 				}
 			}
