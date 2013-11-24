@@ -75,7 +75,6 @@ class UserPermissionsComponent extends Component {
 		if(($find == 0) && (isset($rules['views']))){
 			foreach($rules['views'] as $key => $value){
 				if($key == $action){
-					echo('<p>value: '.$value.'</p>');
 					if(!$this->controller->$value()){
 						if($redirect != ''){
 							if($message != '')
