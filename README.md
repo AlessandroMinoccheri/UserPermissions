@@ -110,7 +110,7 @@ Now everytime that you load a page nside this controller the plugin check permis
 
 ---
 
-##Parameters
+##Settings
 There are some parameters that you can use into this plugin:
 * user_type
 * redirect
@@ -120,7 +120,7 @@ There are some parameters that you can use into this plugin:
 * groups
 * views
 * 
-#user_type
+####user_type
 This parameter is the group name of the user (or the username if you check by username not frm user group).
 You need to pass this information to the plugin to compare who runs the page to the permission that you give.
 usually inside table users, every user have a group field to understand if is an admin, a normal user...
@@ -186,7 +186,7 @@ $rules = array(
 );
 ```
 
-#Redirect
+####Redirect
 This parameter allow you to set a redirect page if the user doesn't have permission to access at the next page.
 You can set this parameter like this:
 
@@ -222,11 +222,11 @@ $rules = array(
 );
 ```
 
-#Message
+####Message
 This parameter allow you to set a speicifc message inside flash message session.
 You can insert the string that you want, you can leave it blank or you can to omitted id if you don't want to set a specific message.
 
-#Action
+####Action
 This parameter is mandatory and it's standard.
 You have always to pass this parameter in this way
 ```
@@ -235,7 +235,7 @@ You have always to pass this parameter in this way
 
 You can't omitted it or you can't modified it, is a standard parameter.
 
-#Controller
+####Controller
 This parameter is mandatory and it's standard.
 You have always to pass this parameter in this way:
 ```
@@ -244,7 +244,7 @@ You have always to pass this parameter in this way:
 
 You can't omitted it or you can't modified it, is a standard parameter.
 
-#Groups
+####Groups
 This is an array of array.
 Inside this array you can create list of user group to spcify which page can be ciew by that user group, or user.
 You can insert inside this array, gropu name or username (in base of user_ype), inside it you can specify the action of this controller that this group can access to it for example:
@@ -270,7 +270,7 @@ Is important to know that you can specify some standard value:
 
 if you omitt some user group or for example user guest, means that the user group, or guest can't access to any page of this controller.
 
-#Views
+####Views
 This parameter is an array of callback function.
 Example:
 ```
@@ -351,3 +351,16 @@ If you are into the page add this function aren't called.
 But if you try to access to the page edit, after understand if the user can access to that page by gripus array, the plugin call checkEdit function.
 This function compare id of the user logged and the id passed by get: means that only the same user can access to that page. if you try to accss to the edit page of another user return an error and you redirect to another page.
 Same thing to the page delete and the funciton checkDelete().
+
+---
+##License
+
+The MIT License (MIT)
+
+Copyright (c) 2009 Jose Diaz-Gonzalez
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
