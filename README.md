@@ -119,7 +119,7 @@ There are some parameters that you can use into this plugin:
 * controller
 * groups
 * views
-* 
+
 ####user_type
 This parameter is the group name of the user (or the username if you check by username not by user group).
 You need to pass this information to the plugin to compare users and permission that you give.
