@@ -51,11 +51,32 @@ class UserPermissionsComponent extends Component {
 		if(!isset($user_id))
 			$user_type = 'guest';
 
-		foreach($rules['groups'] as $key => $value){
-			if($key == $user_type){
-				if(!in_array('*', $actions)){
-					if(!in_array($action, $actions)){
-						$find = 1;
+		if(isset($rules['groups'])){
+			foreach($rules['groups'] as $key => $value){
+				if($key == $user_type){
+					if(!in_array('*', $actions)){
+						if(!in_array($action, $actions)){
+							$find = 1;
+							if($redirect != ''){
+								if($message != '')
+									$this->controller->Session->setFlash($message);
+								
+								$this->controller->redirect($redirect);
+							}
+							else{
+								$bool = '0';
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if(($find == 0) && (isset($rules['views']))){
+			foreach($rules['views'] as $key => $value){
+				if($key == $action){
+					echo('<p>value: '.$value.'</p>');
+					if(!$this->controller->$value()){
 						if($redirect != ''){
 							if($message != '')
 								$this->controller->Session->setFlash($message);
@@ -65,20 +86,6 @@ class UserPermissionsComponent extends Component {
 						else{
 							$bool = '0';
 						}
-					}
-				}
-			}
-		}
-
-		if($find == 0){
-			foreach($rules['views'] as $key => $value){
-				if($key == $action){
-					echo('<p>value: '.$value.'</p>');
-					if(!$this->controller->$value()){
-						echo'diverso';
-					}
-					else{
-						echo'uguali';
 					}
 				}
 			}
