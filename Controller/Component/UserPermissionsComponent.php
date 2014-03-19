@@ -5,7 +5,7 @@ class UserPermissionsComponent extends Component {
 	var $controller = '';
     var $components = array('RequestHandler');
 
-	function initialize(&$controller, $settings = array()) { 
+	function initialize(Controller $controller, $settings = array()) { 
         $this->controller =& $controller; 
     } 
 
@@ -40,20 +40,22 @@ class UserPermissionsComponent extends Component {
 			}
 		}
 
-		foreach($rules['groups']  as $key => $value){
-			if($key == $user_type){
+		foreach( $rules['groups'] as $key => $value )
+		{
+			if( in_array ( $key, $user_type ) )
+			{
 				foreach($value as $v){
 					array_push($actions, $v);
 				}
 			}
 		}
-
+		
 		if(!isset($user_id))
-			$user_type = 'guest';
+			$user_type = array( 'guest' );
 
 		if(isset($rules['groups'])){
 			foreach($rules['groups'] as $key => $value){
-				if($key == $user_type){
+				if(in_array($key, $user_type)){
 					if(!in_array('*', $actions)){
 						if(!in_array($action, $actions)){
 							$find = 1;
