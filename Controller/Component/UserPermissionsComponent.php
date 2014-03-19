@@ -39,7 +39,7 @@ class UserPermissionsComponent extends Component {
 				$message = $value;
 			}
 		}
-		$c = 1;
+
 		foreach( $rules['groups'] as $key => $value )
 		{
 			if( in_array ( $key, $user_type ) )
