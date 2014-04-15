@@ -23,20 +23,22 @@ class UserPermissionsComponent extends Component {
 		$find = 0;
 
 		foreach($rules as $key => $value){
-			if($key == 'user_type'){
-				$user_type = $value;
-			}
-			if($key == 'redirect'){
-				$redirect = $value;
-			}
-			if($key == 'action'){
-				$action = $value;
-			}
-			if($key == 'controller'){
-				$controller = $value;
-			}
-			if($key == 'message'){
-				$message = $value;
+			switch($key){
+				case "user_type":
+			        $user_type = $value;
+			        break;
+			    case "redirect":
+			        $redirect = $value;
+			        break;
+			    case "action":
+			        $action = $value;
+			        break;
+			    case "controller":
+			        $controller = $value;
+			        break;
+			    case "message":
+			        $message = $value;
+			        break;
 			}
 		}
 
