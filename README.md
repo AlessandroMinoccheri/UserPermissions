@@ -45,7 +45,7 @@ _[GIT Clone]_
 
 In your `Plugin` directory type:
 
-    git clone git clone https://github.com/AlessandroMinoccheri/UserPermissions.git UserPermissions
+    git clone https://github.com/AlessandroMinoccheri/UserPermissions.git UserPermissions
     
 ---
 
