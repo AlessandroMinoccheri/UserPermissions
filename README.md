@@ -15,7 +15,7 @@ With UserPermissions plugin you can manage in a simple array all your page for e
 ##Requirements
 
 * CakePHP 2.x
-* PHP5
+* PHP5.x
 
 ---
 
@@ -56,7 +56,7 @@ In cakephp 2.x you need to enable the plugin your app/Config/bootstrap.php file:
 CakePlugin::load('UserPermissions');
 ```
 
-If you are already using CakePlugin::loadAll();, then this is not necessary.
+If you already using CakePlugin::loadAll();, then this is not necessary.
 
 ---
 
@@ -356,7 +356,7 @@ Same thing to the page delete and the function checkDelete().
 
 The MIT License (MIT)
 
-Copyright (c) 2013 Alessandro Minoccheri
+Copyright (c) 2014 Alessandro Minoccheri
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
