@@ -5,9 +5,15 @@ class UserPermissionsComponent extends Component {
 	var $controller = '';
     var $components = array('RequestHandler');
 
+	/* for old version og cakepgp < 2.4.0 
 	function initialize(&$controller, $settings = array()) { 
         $this->controller =& $controller; 
     } 
+    */
+
+    function initialize(Controller $controller, $settings = array()) { 
+		$this->controller =& $controller; 
+	}
 
     public function allow($rules) {
     	App::uses('CakeSession', 'Model/Datasource');
