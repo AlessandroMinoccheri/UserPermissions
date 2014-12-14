@@ -5,7 +5,7 @@ class UserPermissionsComponent extends Component {
 	var $controller = '';
     var $components = array('RequestHandler');
 
-	/* for old version og cakepgp < 2.4.0 
+	/* for old version of cakephp < 2.4.0 
 	function initialize(&$controller, $settings = array()) { 
         $this->controller =& $controller; 
     } 
