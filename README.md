@@ -74,7 +74,7 @@ Inside your action beforeFilter you can set rules for group of user that you wan
 $rules = array(
 	'user_type' => $user_type,
 	'redirect' => '/projects/',
-	'message' => 'You don't have permission to access this page',
+	'message' => 'You do not have permission to access this page',
 	'action' =>  $this->params['action'],
 	'controller' =>  $this->params['controller'],
 	'groups' => array(
