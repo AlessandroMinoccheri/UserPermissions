@@ -23,17 +23,6 @@ With UserPermissions plugin you can manage in a simple array all your page for e
 
 To install the plugin inside your cakephp project you can do this:
 
-_[GIT Submodule]_
-
-* Open your console 
-* Go inside the folder you have got
-* Launch the command: 
-```
-git submodule add -f https://github.com/AlessandroMinoccheri/UserPermissions.git 
-app/Plugin/UserPermissions/.
-```
-
-
 _[Manual]_
 
 * Download this: [https://github.com/AlessandroMinoccheri/UserPermissions/archive/master.zip](https://github.com/AlessandroMinoccheri/UserPermissions/archive/master.zip)
