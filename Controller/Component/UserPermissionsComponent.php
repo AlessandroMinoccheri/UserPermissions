@@ -25,7 +25,7 @@ class UserPermissionsComponent extends Component {
 	 * Initialization to get controller variable
 	 *
 	 * @param array $rules Array of rules for permissions.
-	 * @return boolean '0' if user / group doesn't have permission, 1 if has permission
+	 * @return string '0' if user / group doesn't have permission, 1 if has permission
 	 */
     public function allow ($rules) {
     	App::uses('CakeSession', 'Model/Datasource');
