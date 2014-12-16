@@ -23,6 +23,14 @@ With UserPermissions plugin you can manage in a simple array all your page for e
 
 To install the plugin inside your cakephp project you can do this:
 
+_[GIT Submodule]_
+
+Open your console
+Go inside the plugin folder of your project
+Launch the command:
+git submodule add -f https://github.com/AlessandroMinoccheri/UserPermissions.git 
+app/Plugin/UserPermissions/.
+
 _[Manual]_
 
 * Download this: [https://github.com/AlessandroMinoccheri/UserPermissions/archive/master.zip](https://github.com/AlessandroMinoccheri/UserPermissions/archive/master.zip)
@@ -154,7 +162,7 @@ I advise you tu use field group inside your table and insert it inside session o
 if you don't want to use group field, isn't important. The important is , for example, if you would like to use username, inside the array groups you need to insert the username list not he group list for example:
 
 ```
-$user_type = $this->getUsernameOfuserLgged(); //function to get the username of the user logged in
+$user_type = $this->getUsernameOfuserLogged(); //function to get the username of the user logged in
 $rules = array(
 	'user_type' => $user_type,
 	'redirect' => '/projects/',
@@ -191,7 +199,7 @@ or
 If you don't want to use this parameter you can leave it blank or you can omitted it like this:
 
 ```
-$user_type = $this->getUsernameOfuserLgged(); //function to get the username of the user logged in
+$user_type = $this->getUsernameOfuserLogged(); //function to get the username of the user logged in
 $rules = array(
 	'user_type' => $user_type,
 	'message' => 'No permission',
