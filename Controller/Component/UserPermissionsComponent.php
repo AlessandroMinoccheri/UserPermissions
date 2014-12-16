@@ -11,27 +11,40 @@ class UserPermissionsComponent extends Component {
     } 
     */
 
-    function initialize(Controller $controller, $settings = array()) { 
+    /**
+	 * Initialization to get controller variable
+	 *
+	 * @param Controller $controller The controller to use.
+	 * @param array $settings Array of settings.
+	 */
+    function initialize (Controller $controller, $settings = array()) { 
 		$this->controller =& $controller; 
 	}
 
-    public function allow($rules) {
+	/**
+	 * Initialization to get controller variable
+	 *
+	 * @param array $rules Array of rules for permissions.
+	 * @return boolean '0' if user / group doesn't have permission, 1 if has permission
+	 */
+    public function allow ($rules) {
     	App::uses('CakeSession', 'Model/Datasource');
-		$user_id = CakeSession::read('Auth.User.id');
+		$userId = CakeSession::read('Auth.User.id');
 
-		$actions = array();
-		$bool = '1';
-		$redirect = '';
-		$params = '';
+		$actions 	= array();
+		$bool 		= '1';
+		$redirect 	= '';
+		$params 	= '';
 		$controller = '';
-		$message = '';
+		$message 	= '';
+		$userType 	= '';
+		$find 		= 0;
 
-		$find = 0;
-
+		//setting default options
 		foreach($rules as $key => $value){
 			switch($key){
 				case "user_type":
-			        $user_type = $value;
+			        $userType = $value;
 			        break;
 			    case "redirect":
 			        $redirect = $value;
@@ -48,20 +61,21 @@ class UserPermissionsComponent extends Component {
 			}
 		}
 
+		//push into array group actions
 		foreach($rules['groups']  as $key => $value){
-			if($key == $user_type){
+			if($key == $userType){
 				foreach($value as $v){
 					array_push($actions, $v);
 				}
 			}
 		}
 
-		if(!isset($user_id))
-			$user_type = 'guest';
+		if(!isset($userId))
+			$userType = 'guest';
 
 		if(isset($rules['groups'])){
 			foreach($rules['groups'] as $key => $value){
-				if($key == $user_type){
+				if($key == $userType){
 					if(!in_array('*', $actions)){
 						if(!in_array($action, $actions)){
 							$find = 1;
