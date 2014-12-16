@@ -1,4 +1,4 @@
-UserPermissions
+UserPermissions V 1.1.0
 ===============
 
 a cakephp plugin to allow group of user or single user to view specific page
@@ -25,9 +25,7 @@ To install the plugin inside your cakephp project you can do this:
 
 _[GIT Submodule]_
 
-Open your console
-Go inside the plugin folder of your project
-Launch the command:
+Open your console, go inside your project root and launch the command:
 ```
 git submodule add -f https://github.com/AlessandroMinoccheri/UserPermissions.git app/Plugin/UserPermissions/.
 ```
