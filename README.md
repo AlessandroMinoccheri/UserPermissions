@@ -29,8 +29,7 @@ Open your console
 Go inside the plugin folder of your project
 Launch the command:
 ```
-git submodule add -f https://github.com/AlessandroMinoccheri/UserPermissions.git 
-app/Plugin/UserPermissions/.
+git submodule add -f https://github.com/AlessandroMinoccheri/UserPermissions.git app/Plugin/UserPermissions/.
 ```
 
 _[Manual]_
