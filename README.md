@@ -1,6 +1,8 @@
 UserPermissions V 1.1.0
 ===============
 
+[![Build Status](https://api.travis-ci.org/AlessandroMinoccheri/UserPermissions.png)](https://travis-ci.org/AlessandroMinoccheri/UserPermissions)
+
 a cakephp plugin to allow group of user or single user to view specific page
 
 ---
