@@ -22,7 +22,7 @@ before_script:
     }" > ../cakephp/app/Config/database.php
  
 script:
-  - ./lib/Cake/Console/cake test UserPermissions AllTests --stderr
+  - ./lib/Cake/Console/cake test UserPermissions Controller/Component/UserPermissionComponent --stderr
  
 notifications:
   email: false
