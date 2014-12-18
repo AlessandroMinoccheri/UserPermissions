@@ -6,7 +6,7 @@ php:
 
 env:
   global:
-    - REPO_NAME=UserPermissions
+    - REPO_NAME=AlessandroMinoccheri
     - PLUGIN_NAME=UserPermissions
     - DB=mysql
   matrix:
