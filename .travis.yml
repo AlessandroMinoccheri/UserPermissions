@@ -3,20 +3,25 @@ language: php
 php:
   - 5.3
   - 5.4
-
-env:
-  global:
-    - REPO_NAME=AlessandroMinoccheri
-    - PLUGIN_NAME=UserPermissions
-    - DB=mysql
-  matrix:
-    - DB=mysql CAKE_VERSION=master
-    - DB=mysql CAKE_VERSION=2.6
  
 before_script:
-  - git clone git://github.com/AlessandroMinoccheri/UserPermissions ../cakephp && cd ../cakephp
-  - mv ../asset_compress plugins/AssetCompress
+  - git clone --depth 1 git://github.com/cakephp/cakephp ../cakephp && cd ../cakephp
+  - mv ../UserPermissions plugins/UserPermissions
+  - sh -c "mysql -e 'CREATE DATABASE cakephp_test;'"
   - chmod -R 777 ../cakephp/app/tmp
+  - echo "<?php
+    class DATABASE_CONFIG {
+    public \$test = array(
+      'datasource' => 'Database/Mysql',
+      'database' => 'cakephp_test',
+      'host' => '0.0.0.0',
+      'login' => 'travis',
+      'persistent' => false,
+    );
+    }" > ../cakephp/app/Config/database.php
  
 script:
-  - ./lib/Cake/Console/cake test AssetCompress AllTests --stderr
+  - ./lib/Cake/Console/cake test UserPermissions AllTests --stderr
+ 
+notifications:
+  email: false
