@@ -1,5 +1,5 @@
 {
-  "name": "alessandro-minoccheri/user-permissions",
+  "name": "alessandrominoccheri/userpermissions",
   "type": "cakephp-plugin",
   "description": "a cakephp plugin to allow group of user or single user to view specific page.",
   "keywords": ["cakephp", "component", "permission", "plugin", "access", "rules", "authorization"],
