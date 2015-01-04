@@ -6,7 +6,12 @@ App::uses('ComponentCollection', 'Controller');
 App::uses('UserPermissionsComponent', 'UserPermissions.Controller/Component');
 
 class TestPermissionController extends Controller {
-    // empty
+    public function firstCallback() {
+        return '0';
+    }
+    public function secondCallback() {
+        return '1';
+    }
 }
 
 class UserPermissionComponentTest extends CakeTestCase {
@@ -101,6 +106,66 @@ class UserPermissionComponentTest extends CakeTestCase {
                 'admin-team' => array('register', 'add', 'logout', 'index', 'edit'),
                 'user' => array('register', 'add', 'logout', 'index')
             )
+        );
+
+        $result = $this->UserPermissions->allow($rules);
+        $expected = '1';
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testUserWithPermissionButFalseCallback() {
+        $this->UserPermissions->initialize($this->Controller);
+
+        $user_type = 'user';
+        $action = 'add';
+        $controller = 'TestPermissionController';
+
+        $rules = array(
+            'user_type' => $user_type,
+            'redirect' => '',
+            'message' => 'You don\'t have permission to access this page',
+            'action' =>  $action,
+            'controller' =>  $this->Controller,
+            'groups' => array(
+                'guest' => array('register', 'logout', 'login'),
+                'admin' => array('*'), 
+                'admin-team' => array('register', 'add', 'logout', 'index', 'edit'),
+                'user' => array('register', 'add', 'logout', 'index')
+            ),
+            'views' => array(
+                'add' => 'firstCallback'
+            ),
+        );
+
+        $result = $this->UserPermissions->allow($rules);
+        $expected = '0';
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testUserWithPermissionAndTrueCallback() {
+        $this->UserPermissions->initialize($this->Controller);
+
+        $user_type = 'user';
+        $action = 'add';
+        $controller = 'TestPermissionController';
+
+        $rules = array(
+            'user_type' => $user_type,
+            'redirect' => '',
+            'message' => 'You don\'t have permission to access this page',
+            'action' =>  $action,
+            'controller' =>  $this->Controller,
+            'groups' => array(
+                'guest' => array('register', 'logout', 'login'),
+                'admin' => array('*'), 
+                'admin-team' => array('register', 'add', 'logout', 'index', 'edit'),
+                'user' => array('register', 'add', 'logout', 'index')
+            ),
+            'views' => array(
+                'add' => 'secondCallback'
+            ),
         );
 
         $result = $this->UserPermissions->allow($rules);
