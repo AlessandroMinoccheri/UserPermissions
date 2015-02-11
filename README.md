@@ -3,7 +3,6 @@ UserPermissions V 1.1.0
 [![Latest Stable Version](https://poser.pugx.org/alessandrominoccheri/userpermissions/v/stable.svg)](https://packagist.org/packages/alessandrominoccheri/userpermissions)
 [![License](https://poser.pugx.org/alessandrominoccheri/userpermissions/license.svg)](https://packagist.org/packages/alessandrominoccheri/userpermissions)
 [![Build Status](https://api.travis-ci.org/AlessandroMinoccheri/UserPermissions.png)](https://travis-ci.org/AlessandroMinoccheri/UserPermissions)
-[![Total Downloads](https://poser.pugx.org/alessandrominoccheri/userpermissions/d/total.png)](https://packagist.org/packages/alessandrominoccheri/userpermissions)
 
 a cakephp plugin to allow group of user or single user to view specific page
 
