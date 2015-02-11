@@ -130,15 +130,15 @@ You can pass the value user_type for example in this mode:
 public function beforeFilter () {
 	parent::beforeFilter(); 
 	//default user_type if not logged
-		$user_type = 'guest';
+	$user_type = 'guest';
         
-        //if you have stored field group inside session
+    //if you have stored field group inside session
 	if($this->Session->read('is_logged')){
 		$auth_user = $this->Auth->user();
 		$user_type = $auth_user['group'];
 	}
         
-        //pass user type to the plugin
+    //pass user type to the plugin
 	$rules = array(
 		'user_type' => $user_type,
 		'redirect' => '/projects/',
@@ -165,7 +165,7 @@ I advise you tu use field group inside your table and insert it inside session o
 if you don't want to use group field, isn't important. The important is , for example, if you would like to use username, inside the array groups you need to insert the username list not he group list for example:
 
 ```
-$user_type = $this->getUsernameOfuserLogged(); //function to get the username of the user logged in
+$user_type = $this->getUsernameOfuserLogged();
 $rules = array(
 	'user_type' => $user_type,
 	'redirect' => '/projects/',
@@ -202,21 +202,21 @@ or
 If you don't want to use this parameter you can leave it blank or you can omitted it like this:
 
 ```
-$user_type = $this->getUsernameOfuserLogged(); //function to get the username of the user logged in
+$user_type = $this->getUsernameOfuserLogged();
 $rules = array(
-	'user_type' => $user_type,
-	'message' => 'No permission',
-	'action' =>  $this->params['action'],
-	'controller' =>  $this->params['controller'],
-	'groups' => array(
+	'user_type' 	=> $user_type,
+	'message' 		=> 'No permission',
+	'action' 		=>  $this->params['action'],
+	'controller' 	=>  $this->params['controller'],
+	'groups' 		=> array(
 		'guest' => array('register', 'logout', 'login'),
 		'user1' => array('*'), 
 		'user2' => array('register', 'add', 'logout', 'index', 'edit'),
 		'user3' => array('register', 'add', 'logout', 'index')
 	),
-	'views' => array(
-		'edit' => 'checkEdit',
-		'delete' => 'checkDelete',
+	'views' 		=> array(
+		'edit' 		=> 'checkEdit',
+		'delete' 	=> 'checkDelete',
 	),
 );
 ```
@@ -274,8 +274,8 @@ This parameter is an array of callback function.
 Example:
 ```
 'views' => array(
-	'edit' => 'checkEdit',
-	'delete' => 'checkDelete',
+	'edit' 		=> 'checkEdit',
+	'delete' 	=> 'checkDelete',
 ),
 ```
 
