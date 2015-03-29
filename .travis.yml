@@ -16,7 +16,8 @@ env:
 before_script:
   - php -m
   - git clone --depth 1 --branch $CAKEPHP_VERSION git://github.com/cakephp/cakephp ../cakephp
-  - mv ../UserPermissions plugins/UserPermissions
+  - cd ../cakephp
+  - cp -R ../UserPermissions ./plugins/UserPermissions
   - chmod -R 777 ../cakephp/app/tmp
   - composer global require 'phpunit/phpunit=3.7.33'
   - ln -s ~/.composer/vendor/phpunit/phpunit/PHPUnit ../cakephp/vendors/PHPUnit
