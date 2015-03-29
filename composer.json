@@ -2,7 +2,15 @@
   "name": "alessandrominoccheri/userpermissions",
   "type": "cakephp-plugin",
   "description": "a cakephp plugin to allow group of user or a single user to view specific page.",
-  "keywords": ["cakephp", "component", "permission", "plugin", "access", "rules", "authorization"],
+  "keywords": [
+    "cakephp",
+    "component",
+    "permission",
+    "plugin",
+    "access",
+    "rules",
+    "authorization"
+  ],
   "homepage": "https://github.com/AlessandroMinoccheri/UserPermissions",
   "license": "MIT",
   "authors": [
