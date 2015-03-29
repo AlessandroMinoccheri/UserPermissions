@@ -4,9 +4,18 @@ php:
   - 5.3
   - 5.4
   - 5.5
- 
+
+env:
+  global:
+    - CAKEPHP_ERROR_CONFIG=""
+    - CAKEPHP_SHELL_NAME=test
+
+  matrix:
+    - CAKEPHP_VERSION=2.7
+
 before_script:
-  - git clone --depth 1 git://github.com/cakephp/cakephp ../cakephp && cd ../cakephp
+  - php -m
+  - git clone --depth 1 --branch $CAKEPHP_VERSION git://github.com/cakephp/cakephp ../cakephp
   - mv ../UserPermissions plugins/UserPermissions
   - chmod -R 777 ../cakephp/app/tmp
   - composer global require 'phpunit/phpunit=3.7.33'
