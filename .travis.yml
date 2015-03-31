@@ -11,6 +11,7 @@ env:
     - CAKEPHP_SHELL_NAME=test
 
   matrix:
+    - CAKEPHP_VERSION=2.6
     - CAKEPHP_VERSION=2.7
 
 before_script:
