@@ -1,5 +1,10 @@
 <?php
-App::uses('Component', 'Controller', 'Session');
+namespace UserPermissions\Controller\Component;
+
+use Cake\Controller\Component;
+use Cake\Network\Session;
+use Cake\Datasource\ConnectionManager;
+use Cake\ORM\TableRegistry;
 
 class UserPermissionsComponent extends Component {
 
@@ -8,7 +13,7 @@ class UserPermissionsComponent extends Component {
  *
  * @var string
  */
-	public $controller = '';
+	public $controller = null;
 
 /**
  * Components array
@@ -18,23 +23,27 @@ class UserPermissionsComponent extends Component {
    	public $components = array('RequestHandler');
 
 
-	/* 
-	for old version of cakephp < 2.4.0 
-	function initialize(&$controller, $settings = array()) { 
-        $this->controller =& $controller; 
-    } 
-    */
+/**
+* Initialization to get controller variable
+*
+* @param string $controller The controller to use.
+*/
 
+    public function setController($controller)
+    {
+        $this->controller = $controller;
+    }
 
 /**
 * Initialization to get controller variable
 *
-* @param Controller $controller The controller to use.
-* @param array $settings Array of settings.
+* @param string $event The event to use.
 */
-    function initialize (Controller $controller, $settings = array()) { 
-		$this->controller =& $controller; 
-	}
+
+    public function startup($event)
+    {
+        $this->setController($event->subject());
+    }
 
 /**
 * Initialization to get controller variable
@@ -43,7 +52,6 @@ class UserPermissionsComponent extends Component {
 * @return string '0' if user / group doesn't have permission, 1 if has permission
 */
     public function allow ($rules) {
-    	App::uses('CakeSession', 'Model/Datasource');
 		$userId = CakeSession::read('Auth.User.id');
 
 		$actions 	= array();
