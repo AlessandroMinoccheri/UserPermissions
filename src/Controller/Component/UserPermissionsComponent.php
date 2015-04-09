@@ -5,6 +5,7 @@ use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
+use Cake\Controller\Component\FlashComponent;
 
 class UserPermissionsComponent extends Component {
 
@@ -27,7 +28,7 @@ class UserPermissionsComponent extends Component {
  *
  * @var array
  */
-   	public $components = array('RequestHandler');
+   	public $components = ['Flash'];
 
 
 /**
@@ -103,7 +104,7 @@ class UserPermissionsComponent extends Component {
 							$find = 1;
 							if($redirect != ''){
 								if($message != ''){
-									$this->session->Flash($message);
+									$this->Flash->set($message);
 								}
 								
 								$this->controller->redirect($redirect);
@@ -123,7 +124,7 @@ class UserPermissionsComponent extends Component {
 					if(!$this->controller->$value()){
 						if($redirect != ''){
 							if($message != ''){
-								$this->session->Flash($message);
+								$this->Flash->set($message);
 							}
 							
 							$this->controller->redirect($redirect);
