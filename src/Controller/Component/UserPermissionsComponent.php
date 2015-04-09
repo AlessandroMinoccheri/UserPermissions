@@ -103,7 +103,7 @@ class UserPermissionsComponent extends Component {
 							$find = 1;
 							if($redirect != ''){
 								if($message != ''){
-									$this->controller->Session->setFlash($message);
+									$this->session->Flash($message);
 								}
 								
 								$this->controller->redirect($redirect);
@@ -123,7 +123,7 @@ class UserPermissionsComponent extends Component {
 					if(!$this->controller->$value()){
 						if($redirect != ''){
 							if($message != ''){
-								$this->controller->Session->setFlash($message);
+								$this->session->Flash($message);
 							}
 							
 							$this->controller->redirect($redirect);

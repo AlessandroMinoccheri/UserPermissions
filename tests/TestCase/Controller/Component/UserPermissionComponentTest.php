@@ -7,6 +7,25 @@ use Cake\Controller\ComponentRegistry;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\TestSuite\TestCase;
+use Cake\Routing\Router;
+
+class UserPermissionsTestController extends Controller
+{
+    public function __construct($request = null, $response = null)
+    {
+        $request->webroot = '/';
+        Router::setRequestInfo($request);
+        parent::__construct($request, $response);
+    }
+     
+    public function firstCallback(){
+        return '0';
+    }
+
+    public function secondCallback(){
+        return '1';
+    }
+}
 
 class UserPermissionComponentTest extends TestCase {
 
@@ -16,7 +35,10 @@ class UserPermissionComponentTest extends TestCase {
     public function setUp() {
         parent::setUp();
 
-        $this->UserPermissions = new UserPermissionsComponent(new ComponentRegistry(new Controller));
+        $request = new Request();
+        $response = $this->getMock('Cake\Network\Response', ['stop']);
+        $this->Controller = new UserPermissionsTestController($request, $response);
+        $this->UserPermissions = new UserPermissionsComponent($this->Controller->components());
     }
 
     public function tearDown() {
@@ -25,8 +47,6 @@ class UserPermissionComponentTest extends TestCase {
     }
 
     public function testGuestWithoutPermission() {
-        //$this->UserPermissions->initialize($this->controller);
-
         $user_type = 'guest';
         $action = 'add';
         $controller = 'TestPermissionController';
@@ -52,8 +72,6 @@ class UserPermissionComponentTest extends TestCase {
     }
 
     public function testUserWithoutPermission() {
-        //$this->UserPermissions->initialize($this->controller);
-
         $user_type = 'user';
         $action = 'edit';
         $controller = 'TestPermissionController';
@@ -79,8 +97,6 @@ class UserPermissionComponentTest extends TestCase {
     }
 
     public function testUserWithPermission() {
-        //$this->UserPermissions->initialize($this->controller);
-
         $user_type = 'user';
         $action = 'add';
         $controller = 'TestPermissionController';
@@ -106,8 +122,6 @@ class UserPermissionComponentTest extends TestCase {
     }
 
     public function testUserWithPermissionButFalseCallback() {
-        //$this->UserPermissions->initialize($this->controller);
-
         $user_type = 'user';
         $action = 'add';
         $controller = 'TestPermissionController';
@@ -136,8 +150,6 @@ class UserPermissionComponentTest extends TestCase {
     }
 
     public function testUserWithPermissionAndTrueCallback() {
-        //$this->UserPermissions->initialize($this->controller);
-
         $user_type = 'user';
         $action = 'add';
         $controller = 'TestPermissionController';
