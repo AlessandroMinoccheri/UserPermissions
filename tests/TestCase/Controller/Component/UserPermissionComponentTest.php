@@ -1,40 +1,31 @@
 <?php
-App::uses('Controller', 'Controller');
-App::uses('CakeRequest', 'Network');
-App::uses('CakeResponse', 'Network');
-App::uses('ComponentCollection', 'Controller');
-App::uses('UserPermissionsComponent', 'UserPermissions.Controller/Component');
+namespace App\Test\TestCase\Controller\Component;
 
-class TestPermissionController extends Controller {
-    public function firstCallback() {
-        return '0';
-    }
-    public function secondCallback() {
-        return '1';
-    }
-}
+use UserPermissions\Controller\Component\UserPermissionsComponent;
+use Cake\Controller\Controller;
+use Cake\Controller\ComponentRegistry;
+use Cake\Network\Request;
+use Cake\Network\Response;
+use Cake\TestSuite\TestCase;
 
-class UserPermissionComponentTest extends CakeTestCase {
+class UserPermissionComponentTest extends TestCase {
 
-    public $UserPermissionsComponent = null;
-    public $Controller = null;
+    public $CurrencyConverter = null;
+    public $controller = null;
 
     public function setUp() {
         parent::setUp();
-        $Collection = new ComponentCollection();
-        $this->UserPermissions = new UserPermissionsComponent($Collection);
-        $CakeRequest = new CakeRequest();
-        $CakeResponse = new CakeResponse();
-        $this->Controller = new TestPermissionController($CakeRequest, $CakeResponse);
+
+        $this->UserPermissions = new UserPermissionsComponent(new ComponentRegistry(new Controller));
     }
 
     public function tearDown() {
         parent::tearDown();
-        unset($this->UserPermissionComponent);
+        unset($this->UserPermission, $this->controller);
     }
 
     public function testGuestWithoutPermission() {
-        $this->UserPermissions->initialize($this->Controller);
+        //$this->UserPermissions->initialize($this->controller);
 
         $user_type = 'guest';
         $action = 'add';
@@ -45,7 +36,7 @@ class UserPermissionComponentTest extends CakeTestCase {
             'redirect' => '',
             'message' => 'You don\'t have permission to access this page',
             'action' =>  $action,
-            'controller' =>  $this->Controller,
+            'controller' =>  $this->controller,
             'groups' => array(
                 'guest' => array('register', 'logout', 'login'),
                 'admin' => array('*'), 
@@ -61,7 +52,7 @@ class UserPermissionComponentTest extends CakeTestCase {
     }
 
     public function testUserWithoutPermission() {
-        $this->UserPermissions->initialize($this->Controller);
+        //$this->UserPermissions->initialize($this->controller);
 
         $user_type = 'user';
         $action = 'edit';
@@ -72,7 +63,7 @@ class UserPermissionComponentTest extends CakeTestCase {
             'redirect' => '',
             'message' => 'You don\'t have permission to access this page',
             'action' =>  $action,
-            'controller' =>  $this->Controller,
+            'controller' =>  $this->controller,
             'groups' => array(
                 'guest' => array('register', 'logout', 'login'),
                 'admin' => array('*'), 
@@ -88,7 +79,7 @@ class UserPermissionComponentTest extends CakeTestCase {
     }
 
     public function testUserWithPermission() {
-        $this->UserPermissions->initialize($this->Controller);
+        //$this->UserPermissions->initialize($this->controller);
 
         $user_type = 'user';
         $action = 'add';
@@ -99,7 +90,7 @@ class UserPermissionComponentTest extends CakeTestCase {
             'redirect' => '',
             'message' => 'You don\'t have permission to access this page',
             'action' =>  $action,
-            'controller' =>  $this->Controller,
+            'controller' =>  $this->controller,
             'groups' => array(
                 'guest' => array('register', 'logout', 'login'),
                 'admin' => array('*'), 
@@ -115,7 +106,7 @@ class UserPermissionComponentTest extends CakeTestCase {
     }
 
     public function testUserWithPermissionButFalseCallback() {
-        $this->UserPermissions->initialize($this->Controller);
+        //$this->UserPermissions->initialize($this->controller);
 
         $user_type = 'user';
         $action = 'add';
@@ -126,7 +117,7 @@ class UserPermissionComponentTest extends CakeTestCase {
             'redirect' => '',
             'message' => 'You don\'t have permission to access this page',
             'action' =>  $action,
-            'controller' =>  $this->Controller,
+            'controller' =>  $this->controller,
             'groups' => array(
                 'guest' => array('register', 'logout', 'login'),
                 'admin' => array('*'), 
@@ -145,7 +136,7 @@ class UserPermissionComponentTest extends CakeTestCase {
     }
 
     public function testUserWithPermissionAndTrueCallback() {
-        $this->UserPermissions->initialize($this->Controller);
+        //$this->UserPermissions->initialize($this->controller);
 
         $user_type = 'user';
         $action = 'add';
@@ -156,7 +147,7 @@ class UserPermissionComponentTest extends CakeTestCase {
             'redirect' => '',
             'message' => 'You don\'t have permission to access this page',
             'action' =>  $action,
-            'controller' =>  $this->Controller,
+            'controller' =>  $this->controller,
             'groups' => array(
                 'guest' => array('register', 'logout', 'login'),
                 'admin' => array('*'), 
