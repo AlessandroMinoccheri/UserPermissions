@@ -1,40 +1,57 @@
 language: php
- 
+
 php:
-  - 5.3
   - 5.4
   - 5.5
+  - 5.6
 
 env:
-  global:
-    - CAKEPHP_ERROR_CONFIG=""
-    - CAKEPHP_SHELL_NAME=test
-
   matrix:
-    - CAKEPHP_VERSION=2.6
-    - CAKEPHP_VERSION=2.7
+    - DB=mysql db_class='Cake\Database\Driver\Mysql' db_dsn='mysql:host=0.0.0.0;dbname=cakephp_test' db_database='cakephp_test' db_login='travis' db_password=''
+  global:
+    - DEFAULT=1
+
+matrix:
+  allow_failures:
+    - php: 5.4
+      env: COVERALLS=1 DEFAULT=0
+
+  fast_finish: true
+
+  include:
+    - php: 5.4
+      env: DB=pgsql db_class='Cake\Database\Driver\Postgres' db_dsn='pgsql:host=127.0.0.1;dbname=cakephp_test' db_database="cakephp_test" db_login='postgres' db_password=''
+
+    - php: 5.4
+      env: DB=sqlite db_class='Cake\Database\Driver\Sqlite' db_dsn='sqlite::memory:'
+
+    - php: 5.4
+      env: PHPCS=1 DEFAULT=0
+
+    - php: 5.4
+      env: COVERALLS=1 DEFAULT=0
 
 before_script:
-  - php -m
-  - git clone --depth 1 --branch $CAKEPHP_VERSION git://github.com/cakephp/cakephp ../cakephp
-  - cd ../cakephp
-  - cp -R ../UserPermissions ./plugins/UserPermissions
-  - chmod -R 777 ../cakephp/app/tmp
-  - composer global require 'phpunit/phpunit=3.7.33'
-  - ln -s ~/.composer/vendor/phpunit/phpunit/PHPUnit ../cakephp/vendors/PHPUnit
-  - echo "<?php
-    class DATABASE_CONFIG {
-    public \$test = array(
-      'datasource' => 'Database/Mysql',
-      'database' => 'cakephp_test',
-      'host' => '0.0.0.0',
-      'login' => 'travis',
-      'persistent' => false,
-    );
-    }" > ../cakephp/app/Config/database.php
- 
+  - composer self-update
+  - composer install --prefer-dist --no-interaction --dev
+
+  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi"
+
+  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi"
+
+  - sh -c "if [ '$PHPCS' = '1' ]; then pear channel-discover pear.cakephp.org; fi"
+  - sh -c "if [ '$PHPCS' = '1' ]; then pear install --alldeps cakephp/CakePHP_CodeSniffer; fi"
+
+  - sh -c "if [ '$COVERALLS' = '1' ]; then composer require --dev satooshi/php-coveralls:dev-master; fi"
+  - sh -c "if [ '$COVERALLS' = '1' ]; then mkdir -p build/logs; fi"
+
+  - phpenv rehash
+  - set +H
+  - cp phpunit.xml.dist phpunit.xml
+
 script:
-  - ./lib/Cake/Console/cake test UserPermissions Controller/Component/UserPermissionComponent --stderr
- 
+  - sh -c "if [ '$COVERALLS' = '1' ]; then phpunit --stderr --coverage-clover build/logs/clover.xml; fi"
+  - sh -c "if [ '$COVERALLS' = '1' ]; then php vendor/bin/coveralls -c .coveralls.yml -v; fi"
+
 notifications:
   email: false
