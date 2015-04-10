@@ -1,6 +1,6 @@
 {
     "name"        : "UserPermissions",
-    "version"     : "1.1.2",
+    "version"     : "2.0.0",
     "description" : "a Cakephp plugin to allow group of user or a single user to view specific page.",
     "authors"     : [
         {
@@ -12,6 +12,7 @@
     "homepage" : "https://github.com/AlessandroMinoccheri/UserPermissions",
     "keywords" : [
         "cakephp",
+        "cakephp3",
         "component",
         "permission",
         "plugin",

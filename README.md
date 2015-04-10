@@ -1,10 +1,10 @@
-UserPermissions V 1.1.2
+UserPermissions V 2.0.0
 ===============
 [![Latest Stable Version](https://poser.pugx.org/alessandrominoccheri/userpermissions/v/stable.svg)](https://packagist.org/packages/alessandrominoccheri/userpermissions)
 [![License](https://poser.pugx.org/alessandrominoccheri/userpermissions/license.svg)](https://packagist.org/packages/alessandrominoccheri/userpermissions)
 [![Build Status](https://api.travis-ci.org/AlessandroMinoccheri/UserPermissions.png)](https://travis-ci.org/AlessandroMinoccheri/UserPermissions)
 
-a cakephp plugin to allow group of user or single user to view specific page
+a cakephp plugin for cakephp3 to allow group of user or single user to view specific page
 
 ---
 
@@ -17,8 +17,11 @@ With UserPermissions plugin you can manage in a simple array all your page for e
 
 ##Requirements
 
-* CakePHP 2.x
+* CakePHP 3.x
 * PHP5.x
+
+For cakephp 2.X you can check version 1.1.2 or download this branch:
+[https://github.com/AlessandroMinoccheri/UserPermissions/tree/cakephp2.0](cakephp2)
 
 ---
 
@@ -52,10 +55,21 @@ In your `Plugin` directory type:
 
 In cakephp 2.x you need to enable the plugin your app/Config/bootstrap.php file:
 ```
-CakePlugin::load('UserPermissions');
+Plugin::load('UserPermissions');
 ```
 
-If you already using CakePlugin::loadAll();, then this is not necessary.
+In composer file you can edit autoload in this way:
+
+"autoload": {
+    "psr-4": {
+        "App\\": "src",
+        "UserPermissions\\": "./plugins/UserPermissions/src"
+    }
+},
+But if you don't want to use composer you can load plugin in this way:
+
+Plugin::load('UserPermissions', ['autoload' => true]);
+If you are already using Plugin::loadAll();, then this is not necessary.
 
 ---
 

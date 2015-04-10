@@ -4,6 +4,7 @@
   "description": "a cakephp plugin to allow group of user or a single user to view specific page.",
   "keywords": [
     "cakephp",
+    "cakephp3",
     "component",
     "permission",
     "plugin",
