@@ -59,16 +59,21 @@ Plugin::load('UserPermissions');
 ```
 
 In composer file you can edit autoload in this way:
-
+```
 "autoload": {
     "psr-4": {
         "App\\": "src",
         "UserPermissions\\": "./plugins/UserPermissions/src"
     }
 },
+```
+
 But if you don't want to use composer you can load plugin in this way:
 
+```
 Plugin::load('UserPermissions', ['autoload' => true]);
+```
+
 If you are already using Plugin::loadAll();, then this is not necessary.
 
 ---
