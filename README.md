@@ -53,7 +53,7 @@ In your `Plugin` directory type:
 
 ##Enable plugin
 
-In cakephp 2.x you need to enable the plugin your app/Config/bootstrap.php file:
+In cakephp 3.x you need to enable the plugin your app/Config/bootstrap.php file:
 ```
 Plugin::load('UserPermissions');
 ```
