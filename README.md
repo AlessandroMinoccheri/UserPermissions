@@ -1,4 +1,4 @@
-UserPermissions V 2.0.1
+UserPermissions V 2.0.2
 ===============
 [![Latest Stable Version](https://poser.pugx.org/alessandrominoccheri/userpermissions/v/stable.svg)](https://packagist.org/packages/alessandrominoccheri/userpermissions)
 [![License](https://poser.pugx.org/alessandrominoccheri/userpermissions/license.svg)](https://packagist.org/packages/alessandrominoccheri/userpermissions)
