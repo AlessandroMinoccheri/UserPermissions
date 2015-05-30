@@ -141,8 +141,8 @@ There are some parameters that you can use into this plugin:
 ####user_type
 This parameter is the group name of the user (or the username if you check by username not by user group).
 You need to pass this information to the plugin to compare users and permission that you give.
-Usually inside table users, every user have a group field to understand if is an admin, a normal user...
-You can pass the value user_type for example in this mode:
+Usually inside table users, every user have a group field to understand if is an admin, a normal user etc.
+You can pass the value user_type for example in this way:
 
 ```
 public function beforeFilter () {
@@ -180,7 +180,7 @@ public function beforeFilter () {
 ```
 
 I advise you tu use field group inside your table and insert it inside session or use a function to retrieve this information.
-if you don't want to use group field, isn't important. The important is , for example, if you would like to use username, inside the array groups you need to insert the username list not he group list for example:
+if you don't want to use group field, isn't important. The important is , for example, if you would like to use field "username", inside the array groups you need to insert the username list not the group list for example:
 
 ```
 $user_type = $this->getUsernameOfuserLogged();
