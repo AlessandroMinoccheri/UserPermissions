@@ -104,8 +104,8 @@ $rules = array(
 	'user_type' => $user_type,
 	'redirect' => '/projects/',
 	'message' => 'You do not have permission to access this page',
-	'action' =>  $this->params['action'],
-	'controller' =>  $this->params['controller'],
+	'action' =>  $this->request->params['action'],
+	'controller' =>  $this->request->params['controller'],
 	'groups' => array(
 		'guest' => array('register', 'logout', 'login'),
 		'admin' => array('*'), 
@@ -161,8 +161,8 @@ public function beforeFilter () {
 		'user_type' => $user_type,
 		'redirect' => '/projects/',
 		'message' => 'No permission',
-		'action' =>  $this->params['action'],
-		'controller' =>  $this->params['controller'],
+		'action' =>  $this->request->params['action'],
+		'controller' =>  $this->request->params['controller'],
 		'groups' => array(
 			'guest' => array('register', 'logout', 'login'),
 			'admin' => array('*'), 
@@ -188,8 +188,8 @@ $rules = array(
 	'user_type' => $user_type,
 	'redirect' => '/projects/',
 	'message' => 'No permission',
-	'action' =>  $this->params['action'],
-	'controller' =>  $this->params['controller'],
+	'action' =>  $this->request->params['action'],
+	'controller' =>  $this->request->params['controller'],
 	'groups' => array(
 		'guest' => array('register', 'logout', 'login'),
 		'user1' => array('*'), 
@@ -224,8 +224,8 @@ $user_type = $this->getUsernameOfuserLogged();
 $rules = array(
 	'user_type' 	=> $user_type,
 	'message' 		=> 'No permission',
-	'action' 		=>  $this->params['action'],
-	'controller' 	=>  $this->params['controller'],
+	'action' 		=>  $this->request->params['action'],
+	'controller' 	=>  $this->request->params['controller'],
 	'groups' 		=> array(
 		'guest' => array('register', 'logout', 'login'),
 		'user1' => array('*'), 
@@ -247,7 +247,7 @@ You can insert the string that you want, you can leave it blank or you can to om
 This parameter is mandatory and it's standard.
 You have always to pass this parameter in this way
 ```
-'action' =>  $this->params['action'],
+'action' =>  $this->request->params['action'],
 ```
 
 You can't omitted it or you can't modified it, is a standard parameter.
@@ -256,7 +256,7 @@ You can't omitted it or you can't modified it, is a standard parameter.
 This parameter is mandatory and it's standard.
 You have always to pass this parameter in this way:
 ```
-'controller' =>  $this->params['controller'],
+'controller' =>  $this->request->params['controller'],
 ```
 
 You can't omitted it or you can't modified it, is a standard parameter.
@@ -321,8 +321,8 @@ public function beforeFilter () {
 			'user_type' => $user_type,
 			'redirect' => '/projects/',
 			'message' => 'No permission',
-			'action' =>  $this->params['action'],
-			'controller' =>  $this->params['controller'],
+			'action' =>  $this->request->params['action'],
+			'controller' =>  $this->request->params['controller'],
 			'groups' => array(
 				'guest' => array('register', 'logout', 'login'),
 				'admin' => array('*'), 
