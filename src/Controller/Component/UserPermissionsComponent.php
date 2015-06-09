@@ -52,6 +52,8 @@ class UserPermissionsComponent extends Component {
 * @return string '0' if user / group doesn't have permission, 1 if has permission
 */
     public function allow ($rules) {
+    	$user_id = $this->session->read('Auth.User.id');
+
 		$actions 	= array();
 		$bool 		= '1';
 		$redirect 	= '';
@@ -91,8 +93,9 @@ class UserPermissionsComponent extends Component {
 			}
 		}
 
-		if(!isset($userId))
+		if(!isset($userId)){
 			$userType = 'guest';
+		}
 
 		if(isset($rules['groups'])){
 			foreach($rules['groups'] as $key => $value){
@@ -104,8 +107,9 @@ class UserPermissionsComponent extends Component {
 								if($message != ''){
 									$this->Flash->set($message);
 								}
-								
-								$this->controller->redirect($redirect);
+
+								header("Location: " . $redirect);
+								exit;
 							}
 							else{
 								$bool = '0';
@@ -125,7 +129,8 @@ class UserPermissionsComponent extends Component {
 								$this->Flash->set($message);
 							}
 							
-							$this->controller->redirect($redirect);
+							header("Location: " . $redirect);
+							exit;
 						}
 						else{
 							$bool = '0';
