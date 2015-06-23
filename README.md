@@ -58,17 +58,7 @@ In cakephp 3.x you need to enable the plugin your app/Config/bootstrap.php file:
 Plugin::load('UserPermissions');
 ```
 
-In composer file you can edit autoload in this way:
-```
-"autoload": {
-    "psr-4": {
-        "App\\": "src",
-        "UserPermissions\\": "./plugins/UserPermissions/src"
-    }
-},
-```
-
-But if you don't want to use composer you can load plugin in this way:
+You can load plugin in this way:
 
 ```
 Plugin::load('UserPermissions', ['autoload' => true]);
