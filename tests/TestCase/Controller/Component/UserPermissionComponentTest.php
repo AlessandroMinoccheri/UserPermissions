@@ -28,31 +28,36 @@ class UserPermissionsTestController extends Controller
 }
 
 class UserPermissionComponentTest extends TestCase {
-
-    public $CurrencyConverter = null;
+    private $userPermissions;
     public $controller = null;
 
     public function setUp() {
         parent::setUp();
 
-        $request = new Request();
-        $response = $this->getMock('Cake\Network\Response', ['stop']);
-        $this->Controller = new UserPermissionsTestController($request, $response);
-        $this->UserPermissions = new UserPermissionsComponent($this->Controller->components());
+        $this->request = $this->getMockBuilder('Cake\Network\Request')
+            ->setMethods(['is', 'method'])
+            ->getMock();
+
+        $this->response = $this->getMockBuilder('Cake\Network\Response')
+            ->setMethods(['stop'])
+            ->getMock();
+
+        $this->controller = new UserPermissionsTestController($this->request, $this->response);
+        $this->userPermissions = new UserPermissionsComponent($this->controller->components());
     }
 
     public function tearDown() {
         parent::tearDown();
-        unset($this->UserPermission, $this->controller);
+        unset($this->userPermission, $this->controller);
     }
 
     public function testGuestWithoutPermission() {
-        $user_type = 'guest';
+        $userType = 'guest';
         $action = 'add';
         $controller = 'TestPermissionController';
 
         $rules = array(
-            'user_type' => $user_type,
+            'user_type' => $userType,
             'redirect' => '',
             'message' => 'You don\'t have permission to access this page',
             'action' =>  $action,
@@ -65,19 +70,19 @@ class UserPermissionComponentTest extends TestCase {
             )
         );
 
-        $result = $this->UserPermissions->allow($rules);
-        $expected = '0';
+        $result = $this->userPermissions->allow($rules);
+        $expected = false;
 
         $this->assertEquals($expected, $result);
     }
 
     public function testUserWithoutPermission() {
-        $user_type = 'user';
+        $userType = 'user';
         $action = 'edit';
         $controller = 'TestPermissionController';
 
         $rules = array(
-            'user_type' => $user_type,
+            'user_type' => $userType,
             'redirect' => '',
             'message' => 'You don\'t have permission to access this page',
             'action' =>  $action,
@@ -90,19 +95,19 @@ class UserPermissionComponentTest extends TestCase {
             )
         );
 
-        $result = $this->UserPermissions->allow($rules);
-        $expected = '0';
+        $result = $this->userPermissions->allow($rules);
+        $expected = false;
 
         $this->assertEquals($expected, $result);
     }
 
     public function testUserWithPermission() {
-        $user_type = 'user';
+        $userType = 'user';
         $action = 'add';
         $controller = 'TestPermissionController';
 
         $rules = array(
-            'user_type' => $user_type,
+            'user_type' => $userType,
             'redirect' => '',
             'message' => 'You don\'t have permission to access this page',
             'action' =>  $action,
@@ -115,19 +120,19 @@ class UserPermissionComponentTest extends TestCase {
             )
         );
 
-        $result = $this->UserPermissions->allow($rules);
-        $expected = '1';
+        $result = $this->userPermissions->allow($rules);
+        $expected = true;
 
         $this->assertEquals($expected, $result);
     }
 
     public function testUserWithPermissionButFalseCallback() {
-        $user_type = 'user';
+        $userType = 'user';
         $action = 'add';
         $controller = 'TestPermissionController';
 
         $rules = array(
-            'user_type' => $user_type,
+            'user_type' => $userType,
             'redirect' => '',
             'message' => 'You don\'t have permission to access this page',
             'action' =>  $action,
@@ -143,19 +148,19 @@ class UserPermissionComponentTest extends TestCase {
             ),
         );
 
-        $result = $this->UserPermissions->allow($rules);
-        $expected = '0';
+        $result = $this->userPermissions->allow($rules);
+        $expected = false;
 
         $this->assertEquals($expected, $result);
     }
 
     public function testUserWithPermissionAndTrueCallback() {
-        $user_type = 'user';
+        $userType = 'user';
         $action = 'add';
         $controller = 'TestPermissionController';
 
         $rules = array(
-            'user_type' => $user_type,
+            'user_type' => $userType,
             'redirect' => '',
             'message' => 'You don\'t have permission to access this page',
             'action' =>  $action,
@@ -171,8 +176,8 @@ class UserPermissionComponentTest extends TestCase {
             ),
         );
 
-        $result = $this->UserPermissions->allow($rules);
-        $expected = '1';
+        $result = $this->userPermissions->allow($rules);
+        $expected = true;
 
         $this->assertEquals($expected, $result);
     }

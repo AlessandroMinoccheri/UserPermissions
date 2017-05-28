@@ -1,3 +1,5 @@
 tmp/*
 !empty
 .DS_Store
+vendor/*
+web/*
