@@ -42,6 +42,14 @@ class UserPermissionsComponent extends Component {
         
         $this->controller = $this->_registry->getController();
         $this->session = $this->controller->request->session();
+
+        $this->actions 		= array();
+		$this->allow 		= true;
+		$this->redirect 	= '';
+		$this->params 		= '';
+		$this->message 		= '';
+		$this->userType 	= '';
+		$this->action   	= null;
     }
 
 /**
@@ -51,94 +59,115 @@ class UserPermissionsComponent extends Component {
 * @return string '0' if user / group doesn't have permission, 1 if has permission
 */
     public function allow ($rules) {
-    	$user_id = $this->session->read('Auth.User.id');
+    	$this->setUserValues();
+    	$this->bindConfiguration($rules);
 
-		$actions 	= array();
-		$bool 		= true;
-		$redirect 	= '';
-		$params 	= '';
-		$controller = '';
-		$message 	= '';
-		$userType 	= '';
-		$find 		= 0;
+		if (!$this->applyGroupsRules($rules)) {
+			$this->applyViewsRules($rules);
+		}
 
-		//setting default options
-		foreach($rules as $key => $value){
+		return $this->allow;
+    }
+
+    private function setUserValues()
+    {
+    	$userId = $this->session->read('Auth.User.id');
+
+    	if (!isset($userId)) {
+			$this->userType = 'guest';
+		}
+    }
+
+    private function bindConfiguration(array $rules) 
+    {
+    	foreach($rules as $key => $value){
 			switch($key){
 				case "user_type":
-			        $userType = $value;
+			        $this->userType = $value;
 			        break;
 			    case "redirect":
-			        $redirect = $value;
+			        $this->redirect = $value;
 			        break;
 			    case "action":
-			        $action = $value;
+			        $this->action = $value;
 			        break;
 			    case "controller":
-			        $controller = $value;
+			        $this->controller = $value;
 			        break;
 			    case "message":
-			        $message = $value;
+			        $this->message = $value;
 			        break;
 			}
 		}
 
-		//push into array group actions
 		foreach($rules['groups']  as $key => $value){
-			if($key == $userType){
+			if($key == $this->userType){
 				foreach($value as $v){
-					array_push($actions, $v);
+					array_push($this->actions, $v);
 				}
 			}
 		}
-
-		if(!isset($userId)){
-			$userType = 'guest';
-		}
-
-		if(isset($rules['groups'])){
-			foreach($rules['groups'] as $key => $value){
-				if($key == $userType){
-					if(!in_array('*', $actions)){
-						if(!in_array($action, $actions)){
-							$find = 1;
-							if($redirect != ''){
-								if($message != ''){
-									$this->Flash->set($message);
-								}
-
-								header("Location: " . $redirect);
-								exit;
-							}
-							else{
-								$bool = false;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		if(($find == 0) && (isset($rules['views']))){
-			foreach($rules['views'] as $key => $value){
-				if($key == $action){
-					if(!$this->controller->$value()){
-						if($redirect != ''){
-							if($message != ''){
-								$this->Flash->set($message);
-							}
-							
-							header("Location: " . $redirect);
-							exit;
-						}
-						else{
-							$bool = false;
-						}
-					}
-				}
-			}
-		}
-
-		return $bool;
     }
+
+    private function applyGroupsRules(array $rules) : bool
+    {
+    	$existRulesForGroups = false;
+
+    	if(isset($rules['groups'])){
+			foreach($rules['groups'] as $key => $value){
+				$this->searchForApplyGroupRules($key, $value);
+			}
+		}
+
+		return $existRulesForGroups;
+    }
+
+    private function searchForApplyGroupRules($key, $value)
+    {
+    	if($key == $this->userType){
+    		if ($this->notInArrayAction()) {
+				$existRulesForGroups = true;
+				$this->redirectIfIsSet();
+				
+				$this->allow = false;
+			}
+		}
+    }
+
+    private function notInArrayAction()
+    {
+    	return ((!in_array('*', $this->actions)) && (!in_array($this->action, $this->actions)));
+    }
+
+    private function applyViewsRules(array $rules)
+    {
+    	if(isset($rules['views'])){
+			foreach($rules['views'] as $key => $value){
+				$this->searchForApplyViewRules($key, $value);
+			}
+		}
+    }
+
+    private function searchForApplyViewRules($key, $value)
+    {
+    	if($key == $this->action){
+			if(!$this->controller->$value()){
+				$this->redirectIfIsSet();
+				
+				$this->allow = false;
+			}
+		}
+    }
+
+    private function redirectIfIsSet()
+    {
+    	if($this->redirect != ''){
+			if($this->message != ''){
+				$this->Flash->set($this->message);
+			}
+			
+			header("Location: " . $this->redirect);
+			exit;
+		}
+	}
 }
