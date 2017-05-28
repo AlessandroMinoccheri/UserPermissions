@@ -36,7 +36,6 @@ class UserPermissionsComponent extends Component {
 *
 * @param string $event The event to use.
 */
-
     public function initialize(array $config)
     {
         parent::initialize($config);

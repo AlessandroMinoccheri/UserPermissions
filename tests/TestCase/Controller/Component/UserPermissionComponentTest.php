@@ -28,17 +28,22 @@ class UserPermissionsTestController extends Controller
 }
 
 class UserPermissionComponentTest extends TestCase {
-
-    public $CurrencyConverter = null;
+    private $userPermissions;
     public $controller = null;
 
     public function setUp() {
         parent::setUp();
 
-        $request = new Request();
-        $response = $this->getMock('Cake\Network\Response', ['stop']);
-        $this->Controller = new UserPermissionsTestController($request, $response);
-        $this->UserPermissions = new UserPermissionsComponent($this->Controller->components());
+        $this->request = $this->getMockBuilder('Cake\Network\Request')
+            ->setMethods(['is', 'method'])
+            ->getMock();
+
+        $this->response = $this->getMockBuilder('Cake\Network\Response')
+            ->setMethods(['stop'])
+            ->getMock();
+
+        $this->controller = new UserPermissionsTestController($this->request, $this->response);
+        $this->userPermissions = new UserPermissionsComponent($this->controller->components());
     }
 
     public function tearDown() {
@@ -65,7 +70,7 @@ class UserPermissionComponentTest extends TestCase {
             )
         );
 
-        $result = $this->UserPermissions->allow($rules);
+        $result = $this->userPermissions->allow($rules);
         $expected = '0';
 
         $this->assertEquals($expected, $result);
@@ -90,7 +95,7 @@ class UserPermissionComponentTest extends TestCase {
             )
         );
 
-        $result = $this->UserPermissions->allow($rules);
+        $result = $this->userPermissions->allow($rules);
         $expected = '0';
 
         $this->assertEquals($expected, $result);
@@ -115,7 +120,7 @@ class UserPermissionComponentTest extends TestCase {
             )
         );
 
-        $result = $this->UserPermissions->allow($rules);
+        $result = $this->userPermissions->allow($rules);
         $expected = '1';
 
         $this->assertEquals($expected, $result);
@@ -143,7 +148,7 @@ class UserPermissionComponentTest extends TestCase {
             ),
         );
 
-        $result = $this->UserPermissions->allow($rules);
+        $result = $this->userPermissions->allow($rules);
         $expected = '0';
 
         $this->assertEquals($expected, $result);
@@ -171,7 +176,7 @@ class UserPermissionComponentTest extends TestCase {
             ),
         );
 
-        $result = $this->UserPermissions->allow($rules);
+        $result = $this->userPermissions->allow($rules);
         $expected = '1';
 
         $this->assertEquals($expected, $result);
