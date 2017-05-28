@@ -54,7 +54,7 @@ class UserPermissionsComponent extends Component {
     	$user_id = $this->session->read('Auth.User.id');
 
 		$actions 	= array();
-		$bool 		= '1';
+		$bool 		= true;
 		$redirect 	= '';
 		$params 	= '';
 		$controller = '';
@@ -111,7 +111,7 @@ class UserPermissionsComponent extends Component {
 								exit;
 							}
 							else{
-								$bool = '0';
+								$bool = false;
 							}
 						}
 					}
@@ -132,7 +132,7 @@ class UserPermissionsComponent extends Component {
 							exit;
 						}
 						else{
-							$bool = '0';
+							$bool = false;
 						}
 					}
 				}
