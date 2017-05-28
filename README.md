@@ -8,14 +8,14 @@ a cakephp plugin for cakephp3 to allow groups of users or single users to view a
 
 ---
 
-##Background
+## Background
 
 In cakephp manage permission to view a page for a user or a group of user can be difficult or you need to make many check to understand permission of that user.
 With UserPermissions plugin you can manage in a simple array all your page for every controller, easy, simple and very quickly to apply.
 
 ---
 
-##Requirements
+## Requirements
 
 * CakePHP 3.x
 * PHP5.x
@@ -25,13 +25,14 @@ For cakephp 2.X you can check version 1.1.2 or download this branch:
 
 ---
 
-#Installation
+# Installation
 
 To install the plugin inside your cakephp project you can do this:
 
 _[GIT Submodule]_
 
 Open your console, go inside your project root and launch the command:
+
 ```
 git submodule add -f https://github.com/AlessandroMinoccheri/UserPermissions.git app/Plugin/UserPermissions/.
 ```
@@ -51,9 +52,10 @@ In your `Plugin` directory type:
     
 ---
 
-##Enable plugin
+## Enable plugin
 
 In cakephp 3.x you need to enable the plugin your app/Config/bootstrap.php file:
+
 ```
 Plugin::load('UserPermissions');
 ```
@@ -68,7 +70,7 @@ If you are already using Plugin::loadAll();, then this is not necessary.
 
 ---
 
-##Usage
+## Usage
 
 You can run this plugin from all your controller (except AppController) inside beforeFilter action, because every time user try to load a page there is a check of permission to understand if that user can access to the next page.
 You need to include the plugin component inside your controller like this:
@@ -80,6 +82,7 @@ public $components = array(
 ```
 
 If you have already declare your variable $components you can do something like this:
+
 ```
 public $components = array(
     'OtherComponent.Other',
@@ -110,6 +113,7 @@ $rules = array(
 ```
 
 And to run the check function you only need this line of code:
+
 ```
 $this->UserPermissions->allow($rules);
 ```
@@ -118,7 +122,8 @@ Now everytime that you load a page inside this controller the plugin check for t
 
 ---
 
-##Settings
+## Settings
+
 There are some parameters that you can use into this plugin:
 * user_type
 * redirect
@@ -128,7 +133,7 @@ There are some parameters that you can use into this plugin:
 * groups
 * views
 
-####user_type
+#### user_type
 Is the group name of the user (or the username if you check by username not by user group).
 You need to pass this information to the plugin to compare users and permission that you give.
 Usually inside table users, every user have a group field to understand if is an admin, a normal user etc.
@@ -193,7 +198,7 @@ $rules = array(
 );
 ```
 
-####Redirect
+#### Redirect
 This parameter allow you to set a redirect page if the user doesn't have permission to access at the next page.
 You can set this parameter like this:
 
@@ -229,32 +234,35 @@ $rules = array(
 );
 ```
 
-####Message
+#### Message
 This parameter allow you to set a specific message inside flash message session.
 You can insert the string that you want, you can leave it blank or you can to omitted id if you don't want to set a specific message.
 
-####Action
+#### Action
 This parameter is mandatory and it's standard.
 You have always to pass this parameter in this way
+
 ```
 'action' =>  $this->request->params['action'],
 ```
 
 You can't omitted it or you can't modified it, is a standard parameter.
 
-####Controller
+#### Controller
 This parameter is mandatory and it's standard.
 You have always to pass this parameter in this way:
+
 ```
 'controller' =>  $this->request->params['controller'],
 ```
 
 You can't omitted it or you can't modified it, is a standard parameter.
 
-####Groups
+#### Groups
 This is an array of array.
 Inside this array you can create list of user group to specify which page can be view by that user group, or user.
 You can insert inside this array, gropu name or username (in base of user_type), inside it you can specify the action of this controller that this group can access to it for example:
+
 ```
 'groups' => array(
 	'guest' => array('register', 'login'),
@@ -277,9 +285,10 @@ It's important to know that you can specify some standard value:
 
 if you omitt some user group or for example user guest, means that the user group, or guest can't access to any page of this controller.
 
-####Views
+#### Views
 This parameter is an array of callback function.
 Example:
+
 ```
 'views' => array(
 	'edit' 		=> 'checkEdit',
@@ -293,6 +302,7 @@ If return true the user can access to that page, if false can't access to it.
 The function that you call must be inside the controller where you call the plugin function, have to be the same name that you passed into the string and must be to return a value true or false.
 
 Example:
+
 ```
 public function beforeFilter () {
 		parent::beforeFilter(); 
@@ -360,7 +370,8 @@ This function compare id of the user logged and the id passed by get: means that
 Same thing to the page delete and the function checkDelete().
 
 ---
-##License
+
+## License
 
 The MIT License (MIT)
 
