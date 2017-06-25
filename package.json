@@ -1,6 +1,6 @@
 {
     "name"        : "UserPermissions",
-    "version"     : "2.0.3",
+    "version"     : "3.0.1",
     "description" : "a cakephp plugin for cakephp3 to allow groups of users or single users to view a specific page.",
     "authors"     : [
         {
