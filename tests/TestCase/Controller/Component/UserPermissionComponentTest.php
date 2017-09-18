@@ -54,7 +54,6 @@ class UserPermissionComponentTest extends TestCase {
     public function testGuestWithoutPermission() {
         $userType = 'guest';
         $action = 'add';
-        $controller = 'TestPermissionController';
 
         $rules = array(
             'user_type' => $userType,
@@ -79,7 +78,6 @@ class UserPermissionComponentTest extends TestCase {
     public function testUserWithoutPermission() {
         $userType = 'user';
         $action = 'edit';
-        $controller = 'TestPermissionController';
 
         $rules = array(
             'user_type' => $userType,
@@ -104,7 +102,6 @@ class UserPermissionComponentTest extends TestCase {
     public function testUserWithPermission() {
         $userType = 'user';
         $action = 'add';
-        $controller = 'TestPermissionController';
 
         $rules = array(
             'user_type' => $userType,
@@ -129,7 +126,6 @@ class UserPermissionComponentTest extends TestCase {
     public function testUserWithPermissionButFalseCallback() {
         $userType = 'user';
         $action = 'add';
-        $controller = 'TestPermissionController';
 
         $rules = array(
             'user_type' => $userType,
@@ -157,7 +153,6 @@ class UserPermissionComponentTest extends TestCase {
     public function testUserWithPermissionAndTrueCallback() {
         $userType = 'user';
         $action = 'add';
-        $controller = 'TestPermissionController';
 
         $rules = array(
             'user_type' => $userType,
