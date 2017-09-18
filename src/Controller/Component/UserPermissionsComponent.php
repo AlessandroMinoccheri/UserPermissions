@@ -9,33 +9,46 @@ use Cake\Controller\Component\FlashComponent;
 
 class UserPermissionsComponent extends Component {
 
-/**
- * Controller name
- *
- * @var string
- */
+    /**
+     * Controller name
+     *
+     * @var string
+     */
 	public $controller = null;
 
-/**
- * Session 
- *
- * @var string
- */
+    /**
+     * Session
+     *
+     * @var string
+     */
 	public $session = null;
 
-/**
- * Components array
- *
- * @var array
- */
+    /**
+     * Components array
+     *
+     * @var array
+     */
    	public $components = ['Flash'];
 
+    private $actions;
 
-/**
-* Initialization to get controller variable
-*
-* @param string $event The event to use.
-*/
+    private $allow;
+
+    private $redirect;
+
+    private $params;
+
+    private $message;
+
+    private $userType;
+
+    private $action;
+
+    /**
+    * Initialization to get controller variable
+    *
+    * @param string $event The event to use.
+    */
     public function initialize(array $config)
     {
         parent::initialize($config);
@@ -52,12 +65,12 @@ class UserPermissionsComponent extends Component {
 		$this->action   	= null;
     }
 
-/**
-* Initialization to get controller variable
-*
-* @param array $rules Array of rules for permissions.
-* @return string '0' if user / group doesn't have permission, 1 if has permission
-*/
+    /**
+    * Initialization to get controller variable
+    *
+    * @param array $rules Array of rules for permissions.
+    * @return string '0' if user / group doesn't have permission, 1 if has permission
+    */
     public function allow ($rules) {
     	$this->setUserValues();
     	$this->bindConfiguration($rules);
@@ -109,7 +122,7 @@ class UserPermissionsComponent extends Component {
 		}
     }
 
-    private function applyGroupsRules(array $rules) : bool
+    private function applyGroupsRules(array $rules)
     {
     	$existRulesForGroups = false;
 
@@ -122,11 +135,10 @@ class UserPermissionsComponent extends Component {
 		return $existRulesForGroups;
     }
 
-    private function searchForApplyGroupRules($key, $value)
+    private function searchForApplyGroupRules($key)
     {
     	if($key == $this->userType){
     		if ($this->notInArrayAction()) {
-				$existRulesForGroups = true;
 				$this->redirectIfIsSet();
 				
 				$this->allow = false;
