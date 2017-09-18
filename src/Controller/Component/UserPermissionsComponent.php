@@ -3,9 +3,19 @@ namespace UserPermissions\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
-use Cake\Datasource\ConnectionManager;
-use Cake\ORM\TableRegistry;
 use Cake\Controller\Component\FlashComponent;
+use Cake\Core\Exception\Exception;
+use Cake\Datasource\ConnectionManager;
+use Cake\Log\Log;
+use Cake\ORM\TableRegistry;
+
+/**
+ * An instance of this exception should be thrown, if the
+ * UserPermissionsComponent instance tries to call an handler which does not
+ * exist.
+ */
+class MissingHandlerException extends Exception
+{};
 
 class UserPermissionsComponent extends Component {
 
@@ -43,11 +53,21 @@ class UserPermissionsComponent extends Component {
     private $userType;
 
     private $action;
+	
+	/**
+	 * Boolean value which holds the configuration for the behavior in case of
+	 * missing handlers.
+	 */
+	private $throwEx;
 
     /**
     * Initialization to get controller variable
     *
-    * @param string $event The event to use.
+	* For this component available settings:
+	* 	bool throwEx - default false - if set to true, an exception will be
+	*		thrown, if a handler is about to be called but does not exist.
+	*
+    * @param array $config Configuration array for the component.
     */
     public function initialize(array $config)
     {
@@ -63,13 +83,14 @@ class UserPermissionsComponent extends Component {
 		$this->message 		= '';
 		$this->userType 	= '';
 		$this->action   	= null;
+		$this->throwEx      = isset($config["throwEx"]) && $config["throwEx"];
     }
 
     /**
     * Initialization to get controller variable
     *
     * @param array $rules Array of rules for permissions.
-    * @return string '0' if user / group doesn't have permission, 1 if has permission
+    * @return bool false if user / group doesn't have permission, true if has permission
     */
     public function allow ($rules) {
     	$this->setUserValues();
@@ -106,6 +127,9 @@ class UserPermissionsComponent extends Component {
 			        break;
 			    case "controller":
 			        $this->controller = $value;
+					if(!is_object($value)) {
+						Log::write("warn", sprintf("controller is not an object (%s)", gettype($value)));
+					}
 			        break;
 			    case "message":
 			        $this->message = $value;
@@ -163,6 +187,22 @@ class UserPermissionsComponent extends Component {
     private function searchForApplyViewRules($key, $value)
     {
     	if($key == $this->action){
+			// about to call the view handler, so check first if it exists
+			if(!method_exists($this->controller, $value)) {
+				$msg = sprintf(
+					"Controller %s (%s=%s) has no method called '%s'",
+					$this->controller,
+					is_object($this->controller) ? "class" : "type",
+					is_object($this->controller) ? get_class($this->controller) : gettype($this->controller),
+					$value
+				);
+				Log::write("debug", $msg);
+				if($this->throwEx) {
+					throw new MissingHandlerException($msg);
+				}
+				return;
+			}
+			
 			if(!$this->controller->$value()){
 				$this->redirectIfIsSet();
 				
