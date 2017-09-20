@@ -49,7 +49,7 @@ class UserPermissionComponentTest extends TestCase {
 
     public function tearDown() {
         parent::tearDown();
-        unset($this->userPermission, $this->controller);
+        unset($this->userPermissions, $this->controller);
     }
 
     public function testGuestWithoutPermission() {
@@ -203,7 +203,7 @@ class UserPermissionComponentTest extends TestCase {
 	}
 	
 	public function testMissingHandlerThrowsException() {
-		$this->userPermission->initialize(array("throwEx" => true));
+		$this->userPermissions->initialize(array("throwEx" => true));
 		$userType = "user";
 		$action = "action";
 		
