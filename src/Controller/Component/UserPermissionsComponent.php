@@ -105,14 +105,28 @@ class UserPermissionsComponent extends Component {
     }
 
     private function bindConfiguration(array $rules) 
-    {	
-		foreach(array("user_type", "redirect", "action", "controller", "message") as $key) {
-			if(isset($rules[$key])) {
-				$this->$key = $value;
+    {
+    	foreach($rules as $key => $value){
+			switch($key){
+				case "user_type":
+			        $this->userType = $value;
+			        break;
+			    case "redirect":
+			        $this->redirect = $value;
+			        break;
+			    case "action":
+			        $this->action = $value;
+			        break;
+			    case "controller":
+			        $this->controller = $value;
+					if(!is_object($value)) {
+						Log::write("warning", sprintf("controller is not an object (%s)", gettype($value)));
+					}
+			        break;
+			    case "message":
+			        $this->message = $value;
+			        break;
 			}
-		}
-		if(!is_object($value)) {
-			Log::write("warning", sprintf("controller is not an object (%s)", gettype($value)));
 		}
 
 		foreach($rules['groups']  as $key => $value){
