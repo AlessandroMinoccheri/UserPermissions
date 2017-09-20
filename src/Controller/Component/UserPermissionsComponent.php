@@ -179,9 +179,7 @@ class UserPermissionsComponent extends Component {
     private function searchForApplyViewRules($key, $value)
     {
     	if($key == $this->action) {
-			if(!$this->checkForHandler($this->controller, $value)) return;
-			
-			if(!$this->controller->$value()){
+			if(!$this->checkForHandler($this->controller, $value) || !$this->controller->$value()){
 				$this->redirectIfIsSet();
 				
 				$this->allow = false;
