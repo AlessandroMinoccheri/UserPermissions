@@ -52,6 +52,11 @@ class UserPermissionsComponent extends Component {
 	 */
 	private $throwEx;
 
+	/**
+	 * Boolean value true if an redirect is already invoked.
+	 */
+	private $isRedirecting;
+
     /**
     * Initialization to get controller variable
     *
@@ -68,14 +73,15 @@ class UserPermissionsComponent extends Component {
         $this->controller = $this->_registry->getController();
         $this->session = $this->controller->request->session();
 
-        $this->actions 		= array();
-		$this->allow 		= true;
-		$this->redirect 	= '';
-		$this->params 		= '';
-		$this->message 		= '';
-		$this->userType 	= '';
-		$this->action   	= null;
-		$this->throwEx      = isset($config["throwEx"]) && $config["throwEx"];
+        $this->actions 		 = array();
+		$this->allow 		 = true;
+		$this->redirect 	 = '';
+		$this->params 		 = '';
+		$this->message 		 = '';
+		$this->userType 	 = '';
+		$this->action   	 = null;
+		$this->throwEx       = isset($config["throwEx"]) && $config["throwEx"];
+		$this->isRedirecting = false;
     }
 
     /**
@@ -205,16 +211,22 @@ class UserPermissionsComponent extends Component {
 		
 		return true;
 	}
-
+	
     private function redirectIfIsSet()
     {
-    	if($this->redirect != ''){
+    	if($this->redirect != ''&& !$this->isRedirecting){
+			$this->isRedirecting = true;
 			if($this->message != ''){
 				$this->Flash->set($this->message);
 			}
 			
-			header("Location: " . $this->redirect);
-			exit;
+			if(method_exists($this->controller, "redirect")) {
+				$this->controller->redirect($this->redirect);
+			}
+			else {
+				header("Location: " . $this->redirect);
+				exit;
+			}
 		}
 	}
 }
