@@ -1,13 +1,14 @@
 <?php
 namespace App\Test\TestCase\Controller\Component;
 
-use UserPermissions\Controller\Component\UserPermissionsComponent;
 use Cake\Controller\Controller;
 use Cake\Controller\ComponentRegistry;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\TestSuite\TestCase;
 use Cake\Routing\Router;
+use UserPermissions\Controller\Component\UserPermissionsComponent;
+use UserPermissions\Exception\MissingHandlerException;
 
 class UserPermissionsTestController extends Controller
 {
@@ -176,4 +177,59 @@ class UserPermissionComponentTest extends TestCase {
 
         $this->assertEquals($expected, $result);
     }
+	
+	public function testMissingHandlerBeingIgnored() {
+		$userType = "user";
+		$action = "action";
+		
+		$rules = array(
+			"user_type" => $userType,
+			"redirect" => "",
+			"message" => "You don't have permission to access this page",
+			"action" => $action,
+			"controller" => $this->controller,
+			"groups" => array(
+				$userType => array($action)
+			),
+			"views" => array(
+				$action = "handlerThatDoesNotExistForSure"
+			)
+		);
+		
+		$result = $this->userPermission->allow($rules);
+		$expected = false;
+		
+		$this->assertEquals($expected, $result);
+	}
+	
+	public function testMissingHandlerThrowsException() {
+		$this->userPermission->initialize(array("throwEx" => true));
+		$userType = "user";
+		$action = "action";
+		
+		$rules = array(
+			"user_type" => $userType,
+			"redirect" => "",
+			"message" => "You don't have permission to access this page",
+			"action" => $action,
+			"controller" => $this->controller,
+			"groups" => array(
+				$userType => array($action)
+			),
+			"views" => array(
+				$action = "handlerThatDoesNotExistForSure"
+			)
+		);
+		
+		try {
+			$result = $this->userPermission->allow($rules);
+			$this->fail("No exception thrown");
+		}
+		catch(MissingHandlerException $e) {
+			
+		}
+		catch(\Exception $e) {
+			$this->fail("Wrong exception thrown " . get_class($e));
+		}
+	}
 }
