@@ -1,4 +1,4 @@
-UserPermissions V 3.0.2
+UserPermissions V 3.0.3
 ===============
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/AlessandroMinoccheri/UserPermissions/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/AlessandroMinoccheri/UserPermissions/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/AlessandroMinoccheri/UserPermissions/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/AlessandroMinoccheri/UserPermissions/?branch=master)
