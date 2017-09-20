@@ -1,13 +1,14 @@
 <?php
 namespace App\Test\TestCase\Controller\Component;
 
-use UserPermissions\Controller\Component\UserPermissionsComponent;
 use Cake\Controller\Controller;
 use Cake\Controller\ComponentRegistry;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\TestSuite\TestCase;
 use Cake\Routing\Router;
+use UserPermissions\Controller\Component\UserPermissionsComponent;
+use UserPermissions\Exception\MissingHandlerException;
 
 class UserPermissionsTestController extends Controller
 {
@@ -48,7 +49,7 @@ class UserPermissionComponentTest extends TestCase {
 
     public function tearDown() {
         parent::tearDown();
-        unset($this->userPermission, $this->controller);
+        unset($this->userPermissions, $this->controller);
     }
 
     public function testGuestWithoutPermission() {
@@ -176,4 +177,53 @@ class UserPermissionComponentTest extends TestCase {
 
         $this->assertEquals($expected, $result);
     }
+	
+	public function testMissingHandlerBeingIgnored() {
+		$userType = "user";
+		$action = "action";
+		
+		$rules = array(
+			"user_type" => $userType,
+			"redirect" => "",
+			"message" => "You don't have permission to access this page",
+			"action" => $action,
+			"controller" => $this->controller,
+			"groups" => array(
+				$userType => array($action)
+			),
+			"views" => array(
+				$action = "handlerThatDoesNotExistForSure"
+			)
+		);
+		
+		$result = $this->userPermissions->allow($rules);
+		$expected = false;
+		
+		$this->assertEquals($expected, $result);
+	}
+	
+	/**
+	 * @expectedException \UserPermissions\Exception\MissingHandlerException
+	 */
+	public function testMissingHandlerThrowsException() {
+		$this->userPermissions->initialize(array("throwEx" => true));
+		$userType = "user";
+		$action = "action";
+		
+		$rules = array(
+			"user_type" => $userType,
+			"redirect" => "",
+			"message" => "You don't have permission to access this page",
+			"action" => $action,
+			"controller" => $this->controller,
+			"groups" => array(
+				$userType => array($action)
+			),
+			"views" => array(
+				$action = "handlerThatDoesNotExistForSure"
+			)
+		);
+		
+		$result = $this->userPermissions->allow($rules);
+	}
 }
