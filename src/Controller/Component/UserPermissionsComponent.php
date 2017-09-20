@@ -4,18 +4,10 @@ namespace UserPermissions\Controller\Component;
 use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Component\FlashComponent;
-use Cake\Core\Exception\Exception;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
-
-/**
- * An instance of this exception should be thrown, if the
- * UserPermissionsComponent instance tries to call an handler which does not
- * exist.
- */
-class MissingHandlerException extends Exception
-{};
+use UserPermissions\Exception\MissingHandlerException;
 
 class UserPermissionsComponent extends Component {
 
@@ -128,7 +120,7 @@ class UserPermissionsComponent extends Component {
 			    case "controller":
 			        $this->controller = $value;
 					if(!is_object($value)) {
-						Log::write("warn", sprintf("controller is not an object (%s)", gettype($value)));
+						Log::write("warning", sprintf("controller is not an object (%s)", gettype($value)));
 					}
 			        break;
 			    case "message":
@@ -186,22 +178,8 @@ class UserPermissionsComponent extends Component {
 
     private function searchForApplyViewRules($key, $value)
     {
-    	if($key == $this->action){
-			// about to call the view handler, so check first if it exists
-			if(!method_exists($this->controller, $value)) {
-				$msg = sprintf(
-					"Controller %s (%s=%s) has no method called '%s'",
-					$this->controller,
-					is_object($this->controller) ? "class" : "type",
-					is_object($this->controller) ? get_class($this->controller) : gettype($this->controller),
-					$value
-				);
-				Log::write("debug", $msg);
-				if($this->throwEx) {
-					throw new MissingHandlerException($msg);
-				}
-				return;
-			}
+    	if($key == $this->action) {
+			if(!$this->checkForHandler($this->controller, $value)) return;
 			
 			if(!$this->controller->$value()){
 				$this->redirectIfIsSet();
@@ -210,6 +188,25 @@ class UserPermissionsComponent extends Component {
 			}
 		}
     }
+	
+	private function checkForHandler($controller, $handler)
+	{
+		if(!method_exists($controller, $handler)) {
+			$msg = sprintf(
+				"Controller %s=%s has no method called '%s'",
+				is_object($controller) ? "class" : "type",
+				is_object($controller) ? get_class($controller) : gettype($controller),
+				$handler
+			);
+			Log::write("debug", $msg);
+			if($this->throwEx) {
+				throw new MissingHandlerException($msg);
+			}
+			return false;
+		}
+		
+		return true;
+	}
 
     private function redirectIfIsSet()
     {
