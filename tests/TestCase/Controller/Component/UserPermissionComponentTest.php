@@ -196,7 +196,7 @@ class UserPermissionComponentTest extends TestCase {
 			)
 		);
 		
-		$result = $this->userPermission->allow($rules);
+		$result = $this->userPermissions->allow($rules);
 		$expected = false;
 		
 		$this->assertEquals($expected, $result);
@@ -222,7 +222,7 @@ class UserPermissionComponentTest extends TestCase {
 		);
 		
 		try {
-			$result = $this->userPermission->allow($rules);
+			$result = $this->userPermissions->allow($rules);
 			$this->fail("No exception thrown");
 		}
 		catch(MissingHandlerException $e) {
