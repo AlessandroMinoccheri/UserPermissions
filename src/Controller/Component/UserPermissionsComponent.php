@@ -75,7 +75,7 @@ class UserPermissionsComponent extends Component {
 
         $this->actions 		 = array();
 		$this->allow 		 = true;
-		$this->redirect 	 = '';
+		$this->redirect 	 = null;
 		$this->params 		 = '';
 		$this->message 		 = '';
 		$this->userType 	 = '';
@@ -214,7 +214,7 @@ class UserPermissionsComponent extends Component {
 	
     private function redirectIfIsSet()
     {
-    	if($this->redirect != ''&& !$this->isRedirecting){
+    	if($this->redirect && !$this->isRedirecting){
 			$this->isRedirecting = true;
 			if($this->message != ''){
 				$this->Flash->set($this->message);
