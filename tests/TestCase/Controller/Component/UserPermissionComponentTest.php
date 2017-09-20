@@ -202,6 +202,9 @@ class UserPermissionComponentTest extends TestCase {
 		$this->assertEquals($expected, $result);
 	}
 	
+	/**
+	 * @expectedException \UserPermissions\Exception\MissingHandlerException
+	 */
 	public function testMissingHandlerThrowsException() {
 		$this->userPermissions->initialize(array("throwEx" => true));
 		$userType = "user";
@@ -221,15 +224,6 @@ class UserPermissionComponentTest extends TestCase {
 			)
 		);
 		
-		try {
-			$result = $this->userPermissions->allow($rules);
-			$this->fail("No exception thrown");
-		}
-		catch(MissingHandlerException $e) {
-			
-		}
-		catch(\Exception $e) {
-			$this->fail("Wrong exception thrown " . get_class($e));
-		}
+		$result = $this->userPermissions->allow($rules);
 	}
 }
