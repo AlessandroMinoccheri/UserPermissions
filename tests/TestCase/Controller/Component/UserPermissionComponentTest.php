@@ -247,6 +247,6 @@ class UserPermissionComponentTest extends TestCase {
 		
 		$result = $this->userPermissions->allow($rules);
 		
-		$this->assertEquals($redirectData, $redirector->passedData)
+		$this->assertEquals($redirectData, $redirector->passedData);
 	}
 }
