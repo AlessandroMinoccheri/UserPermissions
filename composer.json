@@ -34,7 +34,8 @@
   },
   "autoload": {
       "psr-4": {
-          "UserPermissions\\": "src"
+          "UserPermissions\\": "src",
+		  "Tests\\":"tests"
       }
   }
 }
