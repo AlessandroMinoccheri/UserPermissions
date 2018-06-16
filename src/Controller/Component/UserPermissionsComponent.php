@@ -144,7 +144,7 @@ class UserPermissionsComponent extends Component {
 
     	if(isset($rules['groups'])){
 			foreach($rules['groups'] as $key => $value){
-				$this->searchForApplyGroupRules($key, $value);
+				$this->searchForApplyGroupRules($key);
 			}
 		}
 
