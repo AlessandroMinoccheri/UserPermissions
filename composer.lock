@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f2254dbcecf2114f6a01e7e8783614d",
+    "content-hash": "43c537b28cd8ae46092a150fcb27be67",
     "packages": [
         {
             "name": "composer/installers",
@@ -289,7 +289,7 @@
                 "codesniffer",
                 "framework"
             ],
-            "time": "2017-05-11 21:12:24"
+            "time": "2017-05-11T21:12:24+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -2006,7 +2006,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.0",
+        "php": ">=7.0",
         "ext-curl": "*"
     },
     "platform-dev": []
