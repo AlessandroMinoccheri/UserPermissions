@@ -1,6 +1,7 @@
 <?php
 namespace App\Test\TestCase\Controller\Component;
 
+use App\Test\TestCase\Resources\MockRedirect;
 use Cake\Controller\Controller;
 use Cake\Controller\ComponentRegistry;
 use Cake\Network\Request;
@@ -225,5 +226,27 @@ class UserPermissionComponentTest extends TestCase {
 		);
 		
 		$result = $this->userPermissions->allow($rules);
+	}
+	
+	public function testCakePhpFashionedRedirect() {
+		$userType = "user";
+		$action = "action";
+		$redirectData = "testRedirectData";
+		$redirector = new MockRedirect();
+		
+		$rules = array(
+			"user_type" => $userType,
+			"redirect" => $redirectData,
+			"message" => "You don't have permission to access this page",
+			"action" => $action,
+			"controller" => $redirector,
+			"groups" => array(
+				$userType => array()
+			)
+		);
+		
+		$result = $this->userPermissions->allow($rules);
+		
+		$this->assertEquals($redirectData, $redirector->passedData);
 	}
 }
